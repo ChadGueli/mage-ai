@@ -27,7 +27,6 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 
 thread = None
 api_key = None
-base_path = None
 
 
 def rescue_errors(endpoint, error_code=500):
@@ -63,8 +62,8 @@ def rescue_errors(endpoint, error_code=500):
 def index():
     return render_template(
         'index.html',
-        base_path='/driver-proxy-api/o/1101580988991721/0615-014323-tzvgbu2s/5789',
-        url_params='?token=dapi0b54332207014989b6667075150b639c',
+        base_path=server_base_path or '',
+        url_params=server_url_params or '',
     )
 
 

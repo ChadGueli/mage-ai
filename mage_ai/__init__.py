@@ -14,6 +14,9 @@ import os
 IFRAME_HEIGHT = 1000
 MAX_NUM_OF_ROWS = 100_000
 
+server_base_path = None
+server_url_params = None
+
 
 class NotebookType(str, Enum):
     DATABRICKS = 'databricks'
@@ -96,10 +99,19 @@ def display_inline_iframe(host=None, port=None, notebook_type=None, config={}):
         cluster_id = config.get('cluster_id')
         workspace_id = config.get('workspace_id')
         token = config.get('token')
-        path_to_server = f'https://{databricks_host}/driver-proxy-api/o/'\
-                         f'{workspace_id}/{cluster_id}/{port}/?token={token}'
+        global server_base_path
+        global server_url_params
+        base_path = f'/driver-proxy-api/o/{workspace_id}/{cluster_id}/{port}/'
+        url_params = f'?token={token}'
+        server_base_path = base_path
+        server_url_params = url_params
+        path_to_server = f'https://{databricks_host}{base_path}{url_params}'
         __print_url()
     else:
+        global server_base_path
+        global server_url_params
+        server_base_path = 'test'
+        server_url_params = 'test'
         __print_url()
         display(IFrame(path_to_server, width='95%', height=1000))
 
