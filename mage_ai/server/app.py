@@ -29,6 +29,15 @@ thread = None
 api_key = None
 
 
+class ServerConfig:
+    def __init__(self):
+        self.server_base_path = None
+        self.server_url_params = None
+
+
+server_config = ServerConfig()
+
+
 def rescue_errors(endpoint, error_code=500):
     def handler(*args, **kwargs):
         try:
@@ -62,8 +71,10 @@ def rescue_errors(endpoint, error_code=500):
 def index():
     return render_template(
         'index.html',
-        base_path=server_base_path or '',
-        url_params=server_url_params or '',
+        # base_path='test',
+        # url_params='?token=123',
+        base_path=server_config.server_base_path or '',
+        url_params=server_config.server_url_params or '',
     )
 
 
