@@ -70,7 +70,7 @@ def rescue_errors(endpoint, error_code=500):
 @rescue_errors
 def index():
     return render_template(
-        'index.html',
+        'datasets.html',
         # base_path='test',
         # url_params='?token=123',
         base_path=server_config.server_base_path or '',
